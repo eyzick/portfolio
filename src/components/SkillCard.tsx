@@ -36,7 +36,7 @@ const SkillCard: React.FC<SkillCardProps> = ({
 
   return (
     <motion.div
-      className="card p-6 group cursor-pointer"
+      className={`card p-6 group cursor-pointer ${bgColor}`}
       variants={cardVariants}
       whileHover={{ 
         scale: 1.01,
@@ -45,6 +45,9 @@ const SkillCard: React.FC<SkillCardProps> = ({
       whileTap={{ scale: 0.98 }}
     >
       <div className={`pl-8 ${styles.textContent}`}>
+        <div className="mb-4">
+          <Icon className={`w-8 h-8 ${color}`} />
+        </div>
         <h3 className="text-xl font-bold mb-3 text-text-primary group-hover:text-primary transition-colors">
           {category}
         </h3>

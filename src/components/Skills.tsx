@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Brain, Code2, Terminal, Database, Cloud, Zap, Cpu, Network } from 'lucide-react';
+import { Brain, Code2, Terminal, Cloud } from 'lucide-react';
 import TechTag from './TechTag';
 import SkillCard from './SkillCard';
 

@@ -20,7 +20,6 @@ interface SnakeGameProps {
 
 const SnakeGame: React.FC<SnakeGameProps> = ({ isActive }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const gameLoopRef = useRef<number | null>(null);
   const [gameState, setGameState] = useState<'menu' | 'playing' | 'gameOver'>('menu');
   const [game, setGame] = useState<GameState>({
     snake: [{ x: 200, y: 200 }],
