@@ -1,0 +1,35 @@
+.nameSection {
+  margin-bottom: 3rem;
+}
+
+.nameHeading {
+  margin-bottom: 2rem;
+}
+
+.titleSection {
+  margin-bottom: 4rem;
+}
+
+.titleHeading {
+  margin-bottom: 2rem;
+}
+
+.buttonsContainer {
+  margin-bottom: 5rem;
+  gap: 3rem;
+}
+
+.button {
+  font-size: 1.25rem;
+  padding: 1.5rem 3rem;
+}
+
+.iconsContainer {
+  margin-top: 6rem;
+  gap: 3rem;
+}
+
+.icon {
+  width: 2.5rem;
+  height: 2.5rem;
+}

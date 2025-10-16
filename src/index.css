@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Orbitron:wght@400;700;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+  }
+  
+  body {
+    background-color: #0f172a;
+    color: #f8fafc;
+    font-family: 'JetBrains Mono', monospace;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+  
+  section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 80px 0;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+  
+  @media (min-width: 768px) {
+    .container {
+      padding-left: 3rem;
+      padding-right: 3rem;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .container {
+      padding-left: 4rem;
+      padding-right: 4rem;
+    }
+  }
+  
+  @media (min-width: 1280px) {
+    .container {
+      padding-left: 5rem;
+      padding-right: 5rem;
+    }
+  }
+}
+
+@layer components {
+  .gradient-text {
+    background: linear-gradient(to right, #60a5fa, #a78bfa, #34d399);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .card {
+    background-color: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 0.75rem;
+    transition: all 0.3s ease;
+  }
+  
+  .card:hover {
+    border-color: #60a5fa;
+    box-shadow: 0 10px 25px rgba(96, 165, 250, 0.15);
+    transform: translateY(-1px);
+  }
+  
+  .btn-primary {
+    background: linear-gradient(to right, #60a5fa, #a78bfa);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(96, 165, 250, 0.4);
+  }
+  
+  .btn-secondary {
+    border: 2px solid #34d399;
+    color: #34d399;
+    padding: 12px 24px;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-secondary:hover {
+    background-color: #34d399;
+    color: white;
+    transform: translateY(-1px);
+  }
+  
+  .tech-tag {
+    display: inline-block;
+    margin-right: 0.75rem;
+    margin-bottom: 0.5rem;
+    white-space: nowrap;
+    padding: 1rem 2rem !important;
+    min-height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
