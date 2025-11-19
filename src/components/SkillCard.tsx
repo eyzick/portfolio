@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, type Variants } from 'framer-motion';
 import TechTag from './TechTag';
 
 interface SkillCardProps {
@@ -21,7 +21,7 @@ const SkillCard: React.FC<SkillCardProps> = ({
   skills,
   index
 }) => {
-  const cardVariants = {
+  const cardVariants: Variants = {
     hidden: { y: 50, opacity: 0 },
     visible: {
       y: 0,
