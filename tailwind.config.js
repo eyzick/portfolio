@@ -7,22 +7,23 @@ export default {
   theme: {
     extend: {
       colors: {
-        'primary': '#60a5fa',
-        'secondary': '#34d399',
-        'accent': '#a78bfa',
-        'dark-bg': '#0f172a',
-        'dark-card': '#1e293b',
-        'text-primary': '#f8fafc',
-        'text-secondary': '#cbd5e1',
+        'primary': '#3b82f6', // blue-500
+        'secondary': '#10b981', // emerald-500
+        'accent': '#8b5cf6', // violet-500
+        'dark-bg': '#020617', // slate-950
+        'dark-card': '#0f172a', // slate-900
+        'text-primary': '#f1f5f9', // slate-100
+        'text-secondary': '#94a3b8', // slate-400
+        'text-muted': '#64748b', // slate-500
       },
       fontFamily: {
+        'sans': ['Inter', 'sans-serif'],
         'mono': ['JetBrains Mono', 'monospace'],
-        'tech': ['Orbitron', 'monospace'],
       },
       animation: {
         'fade-in': 'fadeIn 0.6s ease-in-out',
         'slide-up': 'slideUp 0.6s ease-out',
-        'pulse-subtle': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       },
       keyframes: {
         fadeIn: {

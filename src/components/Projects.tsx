@@ -1,8 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ExternalLink, Github, Calendar, Gift, Trophy } from 'lucide-react';
+import { ExternalLink, Github, Calendar, Gift, Trophy, ArrowUpRight } from 'lucide-react';
 import TechTag from './TechTag';
-import styles from '../styles/components/Projects.module.css';
 
 const Projects: React.FC = () => {
   const projects = [
@@ -58,13 +57,14 @@ const Projects: React.FC = () => {
       opacity: 1,
       transition: {
         duration: 0.5,
+        ease: "easeOut"
       },
     },
   };
 
   return (
-    <section id="projects" className="py-20 bg-dark-card">
-      <div className="container">
+    <section id="projects" className="py-24 relative">
+      <div className="container mx-auto px-4">
         <motion.div
           className="text-center mb-16"
           initial={{ opacity: 0, y: 30 }}
@@ -72,11 +72,13 @@ const Projects: React.FC = () => {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-4xl md:text-5xl font-tech font-bold mb-6">
-            <span className="gradient-text">My Sites</span>
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-white/60">
+              Featured Projects
+            </span>
           </h2>
-          <p className="text-xl text-text-secondary max-w-3xl mx-auto">
-            Explore my collection of web applications and interactive experiences
+          <p className="text-xl text-text-secondary max-w-2xl mx-auto">
+            Explore my collection of web applications and interactive experiences.
           </p>
         </motion.div>
 
@@ -90,66 +92,54 @@ const Projects: React.FC = () => {
           {projects.map((project) => (
             <motion.div
               key={project.title}
-              className={`card ${styles.cardGlow} p-6 group cursor-pointer ${
+              className={`group relative bg-dark-card/50 backdrop-blur-sm border border-white/5 rounded-2xl overflow-hidden hover:border-primary/30 transition-all duration-300 cursor-pointer ${
                 project.featured ? 'md:col-span-2 lg:col-span-1' : ''
               }`}
               variants={cardVariants}
-              whileHover={{ 
-                scale: 1.01,
-                transition: { duration: 0.3 }
-              }}
-              whileTap={{ scale: 0.98 }}
+              whileHover={{ y: -5 }}
               onClick={() => window.open(project.demo, '_blank')}
             >
-              {project.featured && (
-                <span className={styles.featuredBadge}>Featured</span>
-              )}
-              <div className="pl-8" style={{ paddingLeft: '2rem' }}>
-                <h3 className={`text-xl font-bold mb-3 text-text-primary group-hover:text-primary transition-colors ${styles.projectTitle}`}>
-                  {project.title}
-                </h3>
-                
-                <div className="flex items-center justify-between mb-4">
-                  <div className={`flex space-x-2 ${styles.projectLinks}`}>
-                    <motion.a
+              <div className="p-8 h-full flex flex-col">
+                <div className="flex justify-between items-start mb-6">
+                  <div className={`p-3 rounded-xl ${project.bgColor} ${project.color}`}>
+                    <project.icon className="w-6 h-6" />
+                  </div>
+                  <div className="flex gap-3">
+                    <a
                       href={project.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`${styles.projectLink} github p-2 bg-gray-800 hover:bg-primary text-gray-400 hover:text-white rounded-lg transition-colors`}
-                      whileHover={{ scale: 1.1, rotate: 5 }}
-                      whileTap={{ scale: 0.9 }}
+                      className="p-2 text-text-secondary hover:text-white hover:bg-white/10 rounded-lg transition-colors"
                       onClick={(e) => e.stopPropagation()}
                     >
-                      <Github className="h-4 w-4" />
-                    </motion.a>
-                    <motion.a
+                      <Github className="w-5 h-5" />
+                    </a>
+                    <a
                       href={project.demo}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`${styles.projectLink} demo p-2 bg-gray-800 hover:bg-secondary text-gray-400 hover:text-white rounded-lg transition-colors`}
-                      whileHover={{ scale: 1.1, rotate: -5 }}
-                      whileTap={{ scale: 0.9 }}
+                      className="p-2 text-text-secondary hover:text-white hover:bg-white/10 rounded-lg transition-colors"
                       onClick={(e) => e.stopPropagation()}
                     >
-                      <ExternalLink className="h-4 w-4" />
-                    </motion.a>
+                      <ExternalLink className="w-5 h-5" />
+                    </a>
                   </div>
                 </div>
+
+                <h3 className="text-2xl font-bold mb-3 text-white group-hover:text-primary transition-colors">
+                  {project.title}
+                </h3>
                 
-                <p className={`text-text-secondary text-sm mb-6 leading-relaxed ${styles.projectDescription}`}>
+                <p className="text-text-secondary mb-6 leading-relaxed flex-grow">
                   {project.description}
                 </p>
 
-                <div className="flex flex-wrap gap-4">
+                <div className="flex flex-wrap gap-2 mt-auto">
                   {project.tech.map((tech, techIndex) => (
                     <TechTag key={tech} delay={techIndex}>
                       {tech}
                     </TechTag>
                   ))}
-                </div>
-
-                <div className="mt-4 text-xs text-text-secondary opacity-70 group-hover:opacity-100 transition-opacity">
-                  Click anywhere to visit site →
                 </div>
               </div>
             </motion.div>
@@ -163,17 +153,16 @@ const Projects: React.FC = () => {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <motion.a
+          <a
             href="https://github.com/eyzick"
             target="_blank"
             rel="noopener noreferrer"
-            className={`inline-flex items-center px-8 py-4 bg-gradient-to-r from-primary to-accent text-white font-bold rounded-lg hover:shadow-lg hover:shadow-primary/50 transition-all duration-300 ${styles.ctaButton}`}
-            whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(96, 165, 250, 0.5)" }}
-            whileTap={{ scale: 0.95 }}
+            className="inline-flex items-center gap-2 px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-white font-medium transition-all duration-300 hover:scale-105"
           >
-            <Github className="h-5 w-5 mr-2" />
-            View All Sites
-          </motion.a>
+            <Github className="w-5 h-5" />
+            View All Projects
+            <ArrowUpRight className="w-4 h-4" />
+          </a>
         </motion.div>
       </div>
     </section>

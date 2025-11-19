@@ -1,7 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import TechTag from './TechTag';
-import styles from '../styles/components/SkillCard.module.css';
 
 interface SkillCardProps {
   category: string;
@@ -30,39 +29,38 @@ const SkillCard: React.FC<SkillCardProps> = ({
       transition: {
         duration: 0.5,
         delay: index * 0.1,
+        ease: "easeOut"
       },
     },
   };
 
   return (
     <motion.div
-      className={`card p-6 group cursor-pointer ${bgColor}`}
+      className="bg-dark-card/50 backdrop-blur-sm border border-white/5 rounded-2xl p-6 hover:border-primary/30 transition-all duration-300 h-full flex flex-col"
       variants={cardVariants}
       whileHover={{ 
-        scale: 1.01,
+        y: -5,
         transition: { duration: 0.3 }
       }}
-      whileTap={{ scale: 0.98 }}
     >
-      <div className={`pl-8 ${styles.textContent}`}>
-        <div className="mb-4">
-          <Icon className={`w-8 h-8 ${color}`} />
-        </div>
-        <h3 className="text-xl font-bold mb-3 text-text-primary group-hover:text-primary transition-colors">
-          {category}
-        </h3>
-        
-        <p className="text-text-secondary text-sm mb-6 leading-relaxed">
-          {description}
-        </p>
-        
-        <div className="flex flex-wrap gap-4">
-          {skills.map((tech, techIndex) => (
-            <TechTag key={tech} delay={techIndex}>
-              {tech}
-            </TechTag>
-          ))}
-        </div>
+      <div className={`w-12 h-12 rounded-xl ${bgColor} flex items-center justify-center mb-6`}>
+        <Icon className={`w-6 h-6 ${color}`} />
+      </div>
+      
+      <h3 className="text-xl font-bold mb-3 text-white group-hover:text-primary transition-colors">
+        {category}
+      </h3>
+      
+      <p className="text-text-secondary text-sm mb-6 leading-relaxed flex-grow">
+        {description}
+      </p>
+      
+      <div className="flex flex-wrap gap-2 mt-auto">
+        {skills.map((tech, techIndex) => (
+          <TechTag key={tech} delay={techIndex}>
+            {tech}
+          </TechTag>
+        ))}
       </div>
     </motion.div>
   );

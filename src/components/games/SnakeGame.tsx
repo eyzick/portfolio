@@ -226,18 +226,18 @@ const SnakeGame: React.FC<SnakeGameProps> = ({ isActive }) => {
 
   return (
     <div className="flex flex-col items-center">
-      <h3 className="text-2xl font-bold text-text-primary mb-6">Snake Game</h3>
-      <div className="bg-slate-800 rounded-lg p-4">
+      <h3 className="text-2xl font-bold text-white mb-6">Snake Game</h3>
+      <div className="bg-white/5 rounded-lg p-4 backdrop-blur-sm border border-white/10">
         <canvas
           ref={canvasRef}
           width={canvasWidth}
           height={canvasHeight}
-          className="border border-slate-600 rounded"
+          className="border border-white/10 rounded shadow-inner"
         />
       </div>
       <div className="mt-4 text-center text-text-secondary">
         <p className="mb-2">Use arrow keys to control the snake</p>
-        <p className="text-sm">Eat the red food to grow and increase your score!</p>
+        <p className="text-sm opacity-70">Eat the red food to grow and increase your score!</p>
       </div>
     </div>
   );

@@ -1,6 +1,5 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import styles from '../styles/components/TechTag.module.css';
 
 interface TechTagProps {
   children: React.ReactNode;
@@ -20,27 +19,24 @@ const TechTag: React.FC<TechTagProps> = ({
   const getVariantClasses = () => {
     switch (variant) {
       case 'highlight':
-        return styles.techTagHighlight;
+        return 'bg-primary/20 text-primary border-primary/30';
       case 'coming-soon':
-        return styles.techTagComingSoon;
+        return 'bg-accent/20 text-accent border-accent/30';
       default:
-        return styles.techTagDefault;
+        return 'bg-white/5 text-text-secondary border-white/10 hover:bg-white/10 hover:text-white hover:border-white/20';
     }
   };
 
   const defaultHover = {
     scale: 1.05,
-    backgroundColor: '#1e40af',
-    color: '#ffffff',
-    borderColor: '#1e40af'
   };
 
   return (
     <motion.span
-      className={`${styles.techTag} ${getVariantClasses()} ${className}`}
+      className={`inline-flex items-center justify-center px-3 py-1 rounded-full text-xs font-medium border transition-colors ${getVariantClasses()} ${className}`}
       initial={{ opacity: 0, scale: 0.8 }}
       whileInView={{ opacity: 1, scale: 1 }}
-      transition={{ delay: delay * 0.1 }}
+      transition={{ delay: delay * 0.05 }}
       whileHover={whileHover || defaultHover}
     >
       {children}

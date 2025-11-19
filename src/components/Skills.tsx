@@ -50,10 +50,13 @@ const Skills: React.FC = () => {
     },
   };
 
-
   return (
-    <section id="skills" className="py-20 bg-gradient-to-b from-dark-bg to-dark-card">
-      <div className="container">
+    <section id="skills" className="py-24 bg-dark-bg relative overflow-hidden">
+      {/* Background Elements */}
+      <div className="absolute top-1/2 left-0 w-96 h-96 bg-primary/5 rounded-full blur-[100px] -translate-y-1/2 pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-secondary/5 rounded-full blur-[100px] pointer-events-none" />
+
+      <div className="container mx-auto px-4 relative z-10">
         <motion.div
           className="text-center mb-16"
           initial={{ opacity: 0, y: 30 }}
@@ -61,16 +64,18 @@ const Skills: React.FC = () => {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-4xl md:text-5xl font-tech font-bold mb-6">
-            <span className="gradient-text">Skills & Expertise</span>
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-white/60">
+              Skills & Expertise
+            </span>
           </h2>
-          <p className="text-xl text-text-secondary max-w-3xl mx-auto">
-            Specialized in AI, TypeScript, and Python development with a focus on creating innovative solutions
+          <p className="text-xl text-text-secondary max-w-2xl mx-auto">
+            Specialized in AI, TypeScript, and Python development with a focus on creating innovative solutions.
           </p>
         </motion.div>
 
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -97,10 +102,10 @@ const Skills: React.FC = () => {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <h3 className="text-2xl font-tech font-bold mb-8 gradient-text">
+          <h3 className="text-2xl font-bold mb-8 text-white">
             Tech Stack Highlights
           </h3>
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="flex flex-wrap justify-center gap-3">
             {['AI/ML', 'TypeScript', 'Python', 'React', 'Node.js', 'AWS', 'Docker', 'Kubernetes'].map((tech, index) => (
               <TechTag key={tech} variant="highlight" delay={index}>
                 {tech}
