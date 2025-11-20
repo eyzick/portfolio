@@ -19,6 +19,7 @@ interface FlappyBirdProps {
 
 const FlappyBird: React.FC<FlappyBirdProps> = ({ isActive }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const gameLoopRef = useRef<number | null>(null);
   const [gameState, setGameState] = useState<'menu' | 'playing' | 'dying' | 'gameOver'>('menu');
   const [score, setScore] = useState(0);
@@ -27,6 +28,7 @@ const FlappyBird: React.FC<FlappyBirdProps> = ({ isActive }) => {
   const [pipes, setPipes] = useState<Pipe[]>([]);
   const [gameSpeed, setGameSpeed] = useState(2);
   const [deathAnimation, setDeathAnimation] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
 
   const canvasWidth = 400;
   const canvasHeight = 500;
@@ -154,10 +156,29 @@ const FlappyBird: React.FC<FlappyBirdProps> = ({ isActive }) => {
     };
   }, [gameState, updateGame]);
 
+  // Handle focus management
+  useEffect(() => {
+    const handleFocus = () => setIsFocused(true);
+    const handleBlur = () => setIsFocused(false);
+    const container = containerRef.current;
+
+    if (container) {
+      container.addEventListener('focus', handleFocus);
+      container.addEventListener('blur', handleBlur);
+    }
+
+    return () => {
+      if (container) {
+        container.removeEventListener('focus', handleFocus);
+        container.removeEventListener('blur', handleBlur);
+      }
+    };
+  }, []);
+
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
-      // Only handle keys if this game is active
-      if (!isActive) return;
+      // Only handle keys if this game is active AND focused
+      if (!isActive || !isFocused) return;
 
       if (e.code === 'Space') {
         e.preventDefault();
@@ -174,7 +195,7 @@ const FlappyBird: React.FC<FlappyBirdProps> = ({ isActive }) => {
 
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [gameState, startGame, jump, isActive]);
+  }, [gameState, startGame, jump, isActive, isFocused]);
 
   const draw = useCallback(() => {
     const canvas = canvasRef.current;
@@ -222,6 +243,13 @@ const FlappyBird: React.FC<FlappyBirdProps> = ({ isActive }) => {
       ctx.font = '16px Arial';
       ctx.fillText('Press SPACE to start', canvasWidth / 2, canvasHeight / 2);
       ctx.fillText(`High Score: ${highScore}`, canvasWidth / 2, canvasHeight / 2 + 30);
+      
+      // Focus instruction
+      if (!isFocused) {
+        ctx.font = '14px Arial';
+        ctx.fillStyle = '#ffff00';
+        ctx.fillText('Click to focus game', canvasWidth / 2, canvasHeight - 20);
+      }
     }
 
     if (gameState === 'gameOver') {
@@ -245,26 +273,33 @@ const FlappyBird: React.FC<FlappyBirdProps> = ({ isActive }) => {
       ctx.textAlign = 'center';
       ctx.fillText('💥 CRASH! 💥', canvasWidth / 2, canvasHeight / 2);
     }
-  }, [bird, pipes, score, highScore, gameState, deathAnimation]);
+  }, [bird, pipes, score, highScore, gameState, deathAnimation, isFocused]);
 
   useEffect(() => {
     draw();
   }, [draw]);
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center outline-none" ref={containerRef} tabIndex={0}>
       <h3 className="text-2xl font-bold text-white mb-6">Flappy Bird Clone</h3>
-      <div className="bg-white/5 rounded-lg p-4 backdrop-blur-sm border border-white/10">
+      <div 
+        className={`bg-white/5 rounded-lg p-4 backdrop-blur-sm border transition-colors duration-300 ${isFocused ? 'border-primary shadow-[0_0_15px_rgba(59,130,246,0.5)]' : 'border-white/10'}`}
+      >
         <canvas
           ref={canvasRef}
           width={canvasWidth}
           height={canvasHeight}
-          className="border border-white/10 rounded shadow-inner"
-          onClick={jump}
+          className="border border-white/10 rounded shadow-inner cursor-pointer"
+          onClick={() => {
+            containerRef.current?.focus();
+            jump();
+          }}
         />
       </div>
       <div className="mt-4 text-center text-text-secondary">
-        <p className="mb-2">Press SPACE or click to jump</p>
+        <p className={`mb-2 transition-colors ${isFocused ? 'text-primary font-medium' : ''}`}>
+          {isFocused ? 'Game Focused - Press SPACE to jump' : 'Click game to play'}
+        </p>
         <p className="text-sm opacity-70">Avoid the pipes and try to get the highest score!</p>
       </div>
     </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, type Variants } from 'framer-motion';
-import { ExternalLink, Github, Calendar, Gift, Trophy, ArrowUpRight } from 'lucide-react';
+import { ExternalLink, Github, Calendar, Gift, ArrowUpRight } from 'lucide-react';
 import TechTag from './TechTag';
 
 const Projects: React.FC = () => {
@@ -27,7 +27,7 @@ const Projects: React.FC = () => {
       demo: 'https://wishlist.eyzick.com',
       featured: true
     },
-    {
+/*     {
       title: 'House Cup Tracker',
       description: 'A competitive house cup tracking system inspired by magical competitions with real-time scoring.',
       tech: ['React', 'TypeScript', 'Firebase', 'CSS3', 'JavaScript'],
@@ -37,7 +37,7 @@ const Projects: React.FC = () => {
       github: 'https://github.com/eyzick/house-cup-tournament',
       demo: 'https://house-cup.eyzick.com',
       featured: false
-    },
+    }, */
   ];
 
   const containerVariants: Variants = {
@@ -83,7 +83,7 @@ const Projects: React.FC = () => {
         </motion.div>
 
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -92,9 +92,7 @@ const Projects: React.FC = () => {
           {projects.map((project) => (
             <motion.div
               key={project.title}
-              className={`group relative bg-dark-card/50 backdrop-blur-sm border border-white/5 rounded-2xl overflow-hidden hover:border-primary/30 transition-all duration-300 cursor-pointer ${
-                project.featured ? 'md:col-span-2 lg:col-span-1' : ''
-              }`}
+              className={`group relative bg-dark-card/50 backdrop-blur-sm border border-white/5 rounded-2xl overflow-hidden hover:border-primary/30 transition-all duration-300 cursor-pointer`}
               variants={cardVariants}
               whileHover={{ y: -5 }}
               onClick={() => window.open(project.demo, '_blank')}

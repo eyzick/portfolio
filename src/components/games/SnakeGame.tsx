@@ -20,7 +20,9 @@ interface SnakeGameProps {
 
 const SnakeGame: React.FC<SnakeGameProps> = ({ isActive }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [gameState, setGameState] = useState<'menu' | 'playing' | 'gameOver'>('menu');
+  const [isFocused, setIsFocused] = useState(false);
   const [game, setGame] = useState<GameState>({
     snake: [{ x: 200, y: 200 }],
     food: { x: 300, y: 300 },
@@ -121,10 +123,29 @@ const SnakeGame: React.FC<SnakeGameProps> = ({ isActive }) => {
     }
   }, [gameState, game.gameOver, updateGame]);
 
+  // Handle focus management
+  useEffect(() => {
+    const handleFocus = () => setIsFocused(true);
+    const handleBlur = () => setIsFocused(false);
+    const container = containerRef.current;
+
+    if (container) {
+      container.addEventListener('focus', handleFocus);
+      container.addEventListener('blur', handleBlur);
+    }
+
+    return () => {
+      if (container) {
+        container.removeEventListener('focus', handleFocus);
+        container.removeEventListener('blur', handleBlur);
+      }
+    };
+  }, []);
+
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
-      // Only handle keys if this game is active
-      if (!isActive) return;
+      // Only handle keys if this game is active AND focused
+      if (!isActive || !isFocused) return;
 
       switch (e.key) {
         case 'ArrowUp':
@@ -164,7 +185,7 @@ const SnakeGame: React.FC<SnakeGameProps> = ({ isActive }) => {
 
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [gameState, game.gameOver, startGame, isActive]);
+  }, [gameState, game.gameOver, startGame, isActive, isFocused]);
 
   const draw = useCallback(() => {
     const canvas = canvasRef.current;
@@ -204,6 +225,13 @@ const SnakeGame: React.FC<SnakeGameProps> = ({ isActive }) => {
       ctx.font = '16px Arial';
       ctx.fillText('Press SPACE to start', canvasWidth / 2, canvasHeight / 2);
       ctx.fillText(`High Score: ${game.highScore}`, canvasWidth / 2, canvasHeight / 2 + 30);
+      
+      // Focus instruction
+      if (!isFocused) {
+        ctx.font = '14px Arial';
+        ctx.fillStyle = '#ffff00';
+        ctx.fillText('Click to focus game', canvasWidth / 2, canvasHeight - 20);
+      }
     }
 
     if (game.gameOver) {
@@ -218,25 +246,30 @@ const SnakeGame: React.FC<SnakeGameProps> = ({ isActive }) => {
       ctx.fillText(`High Score: ${game.highScore}`, canvasWidth / 2, canvasHeight / 2 + 30);
       ctx.fillText('Press SPACE to restart', canvasWidth / 2, canvasHeight / 2 + 60);
     }
-  }, [game, gameState]);
+  }, [game, gameState, isFocused]);
 
   useEffect(() => {
     draw();
   }, [draw]);
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center outline-none" ref={containerRef} tabIndex={0}>
       <h3 className="text-2xl font-bold text-white mb-6">Snake Game</h3>
-      <div className="bg-white/5 rounded-lg p-4 backdrop-blur-sm border border-white/10">
+      <div 
+        className={`bg-white/5 rounded-lg p-4 backdrop-blur-sm border transition-colors duration-300 ${isFocused ? 'border-primary shadow-[0_0_15px_rgba(59,130,246,0.5)]' : 'border-white/10'}`}
+      >
         <canvas
           ref={canvasRef}
           width={canvasWidth}
           height={canvasHeight}
-          className="border border-white/10 rounded shadow-inner"
+          className="border border-white/10 rounded shadow-inner cursor-pointer"
+          onClick={() => containerRef.current?.focus()}
         />
       </div>
       <div className="mt-4 text-center text-text-secondary">
-        <p className="mb-2">Use arrow keys to control the snake</p>
+        <p className={`mb-2 transition-colors ${isFocused ? 'text-primary font-medium' : ''}`}>
+          {isFocused ? 'Game Focused - Use arrow keys' : 'Click game to play'}
+        </p>
         <p className="text-sm opacity-70">Eat the red food to grow and increase your score!</p>
       </div>
     </div>
