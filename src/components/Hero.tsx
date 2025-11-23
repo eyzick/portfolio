@@ -1,6 +1,8 @@
 import React from 'react';
 import { motion, type Variants } from 'framer-motion';
 import { Brain, Code2, Terminal, Zap, ArrowRight } from 'lucide-react';
+import { TypeAnimation } from 'react-type-animation';
+import ParticleBackground from './ParticleBackground';
 
 const Hero: React.FC = () => {
   const containerVariants: Variants = {
@@ -29,9 +31,12 @@ const Hero: React.FC = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
       {/* Background Elements */}
+      <div className="absolute top-0 left-0 w-full h-full z-0">
+        <ParticleBackground />
+      </div>
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl pointer-events-none">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-primary/20 rounded-full blur-[100px] animate-pulse-slow" />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent/10 rounded-full blur-[120px] animate-pulse-slow" style={{ animationDelay: '2s' }} />
+        <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full blur-[100px] animate-pulse-slow" />
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent/5 rounded-full blur-[120px] animate-pulse-slow" style={{ animationDelay: '2s' }} />
       </div>
 
       <motion.div
@@ -49,10 +54,25 @@ const Hero: React.FC = () => {
         </motion.div>
 
         <motion.div variants={itemVariants} className="mb-12">
-          <h2 className="text-2xl md:text-3xl text-text-secondary mb-6 font-light">
-            AI Engineer & Full-Stack Developer
-          </h2>
-          <p className="text-lg md:text-xl text-text-muted max-w-2xl mx-auto leading-relaxed">
+          <div className="text-2xl md:text-3xl text-text-secondary mb-6 font-light h-10">
+            <TypeAnimation
+              sequence={[
+                'Full-Stack Developer',
+                2000,
+                'AI Engineer',
+                2000,
+                'Problem Solver',
+                2000,
+                'Tech Enthusiast',
+                2000,
+              ]}
+              wrapper="span"
+              speed={50}
+              repeat={Infinity}
+              className="text-primary font-medium"
+            />
+          </div>
+          <p className="text-lg md:text-xl text-text-muted max-w-2xl mx-auto leading-relaxed mb-10">
             Crafting intelligent solutions with <span className="text-primary font-medium">TypeScript</span>, 
             <span className="text-secondary font-medium"> Python</span>, and cutting-edge 
             <span className="text-accent font-medium"> AI technologies</span>.

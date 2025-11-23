@@ -59,6 +59,62 @@ const SnakeGame: React.FC<SnakeGameProps> = ({ isActive }) => {
     });
   }, [generateFood, game.highScore]);
 
+  // Handle touch controls for mobile
+  const handleTouch = useCallback((e: React.TouchEvent) => {
+    e.preventDefault();
+    if (!isFocused) {
+      containerRef.current?.focus();
+      return;
+    }
+
+    if (gameState === 'menu' || gameState === 'gameOver') {
+      startGame();
+      return;
+    }
+
+    // Simple touch controls: tap sides of screen to turn
+    const touch = e.touches[0];
+    const rect = (e.target as HTMLElement).getBoundingClientRect();
+    const x = touch.clientX - rect.left;
+    const y = touch.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    setGame(prev => {
+      let newDirection = prev.direction;
+      
+      // Determine relative position of touch
+      const diffX = x - centerX;
+      const diffY = y - centerY;
+
+      // Determine if horizontal or vertical movement dominates
+      if (Math.abs(diffX) > Math.abs(diffY)) {
+        // Horizontal
+        if (diffX > 0 && prev.direction !== 'left') newDirection = 'right';
+        else if (diffX < 0 && prev.direction !== 'right') newDirection = 'left';
+      } else {
+        // Vertical
+        if (diffY > 0 && prev.direction !== 'up') newDirection = 'down';
+        else if (diffY < 0 && prev.direction !== 'down') newDirection = 'up';
+      }
+
+      return { ...prev, direction: newDirection };
+    });
+  }, [isFocused, gameState, startGame]);
+
+  // Handle click interactions for start/restart
+  const handleClick = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    if (!isFocused) {
+      containerRef.current?.focus();
+      return;
+    }
+
+    if (gameState === 'menu' || gameState === 'gameOver') {
+      startGame();
+    }
+  }, [isFocused, gameState, startGame]);
+
   const updateGame = useCallback(() => {
     if (gameState !== 'playing') return;
 
@@ -230,7 +286,7 @@ const SnakeGame: React.FC<SnakeGameProps> = ({ isActive }) => {
       if (!isFocused) {
         ctx.font = '14px Arial';
         ctx.fillStyle = '#ffff00';
-        ctx.fillText('Click to focus game', canvasWidth / 2, canvasHeight - 20);
+        ctx.fillText('Click/Tap to focus game', canvasWidth / 2, canvasHeight - 20);
       }
     }
 
@@ -262,13 +318,14 @@ const SnakeGame: React.FC<SnakeGameProps> = ({ isActive }) => {
           ref={canvasRef}
           width={canvasWidth}
           height={canvasHeight}
-          className="border border-white/10 rounded shadow-inner cursor-pointer"
-          onClick={() => containerRef.current?.focus()}
+          className="border border-white/10 rounded shadow-inner cursor-pointer touch-none"
+          onClick={handleClick}
+          onTouchStart={handleTouch}
         />
       </div>
       <div className="mt-4 text-center text-text-secondary">
         <p className={`mb-2 transition-colors ${isFocused ? 'text-primary font-medium' : ''}`}>
-          {isFocused ? 'Game Focused - Use arrow keys' : 'Click game to play'}
+          {isFocused ? 'Game Focused - Use arrows or tap sides' : 'Click/Tap game to play'}
         </p>
         <p className="text-sm opacity-70">Eat the red food to grow and increase your score!</p>
       </div>

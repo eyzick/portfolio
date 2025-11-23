@@ -2,6 +2,7 @@ import React from 'react';
 import { motion, type Variants } from 'framer-motion';
 import { ExternalLink, Github, Calendar, Gift, ArrowUpRight } from 'lucide-react';
 import TechTag from './TechTag';
+import TiltCard from './TiltCard';
 
 const Projects: React.FC = () => {
   const projects = [
@@ -92,54 +93,56 @@ const Projects: React.FC = () => {
           {projects.map((project) => (
             <motion.div
               key={project.title}
-              className={`group relative bg-dark-card/50 backdrop-blur-sm border border-white/5 rounded-2xl overflow-hidden hover:border-primary/30 transition-all duration-300 cursor-pointer`}
               variants={cardVariants}
-              whileHover={{ y: -5 }}
-              onClick={() => window.open(project.demo, '_blank')}
             >
-              <div className="p-8 h-full flex flex-col">
-                <div className="flex justify-between items-start mb-6">
-                  <div className={`p-3 rounded-xl ${project.bgColor} ${project.color}`}>
-                    <project.icon className="w-6 h-6" />
+              <TiltCard
+                className={`group relative bg-dark-card/50 backdrop-blur-sm border border-white/5 rounded-2xl overflow-hidden hover:border-primary/30 transition-all duration-300 cursor-pointer h-full`}
+                onClick={() => window.open(project.demo, '_blank')}
+              >
+                <div className="p-8 h-full flex flex-col">
+                  <div className="flex justify-between items-start mb-6">
+                    <div className={`p-3 rounded-xl ${project.bgColor} ${project.color}`}>
+                      <project.icon className="w-6 h-6" />
+                    </div>
+                    <div className="flex gap-3">
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-2 text-text-secondary hover:text-white hover:bg-white/10 rounded-lg transition-colors relative z-10"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <Github className="w-5 h-5" />
+                      </a>
+                      <a
+                        href={project.demo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-2 text-text-secondary hover:text-white hover:bg-white/10 rounded-lg transition-colors relative z-10"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <ExternalLink className="w-5 h-5" />
+                      </a>
+                    </div>
                   </div>
-                  <div className="flex gap-3">
-                    <a
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-2 text-text-secondary hover:text-white hover:bg-white/10 rounded-lg transition-colors"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      <Github className="w-5 h-5" />
-                    </a>
-                    <a
-                      href={project.demo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-2 text-text-secondary hover:text-white hover:bg-white/10 rounded-lg transition-colors"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      <ExternalLink className="w-5 h-5" />
-                    </a>
+
+                  <h3 className="text-2xl font-bold mb-3 text-white group-hover:text-primary transition-colors">
+                    {project.title}
+                  </h3>
+                  
+                  <p className="text-text-secondary mb-6 leading-relaxed flex-grow">
+                    {project.description}
+                  </p>
+
+                  <div className="flex flex-wrap gap-2 mt-auto">
+                    {project.tech.map((tech, techIndex) => (
+                      <TechTag key={tech} delay={techIndex}>
+                        {tech}
+                      </TechTag>
+                    ))}
                   </div>
                 </div>
-
-                <h3 className="text-2xl font-bold mb-3 text-white group-hover:text-primary transition-colors">
-                  {project.title}
-                </h3>
-                
-                <p className="text-text-secondary mb-6 leading-relaxed flex-grow">
-                  {project.description}
-                </p>
-
-                <div className="flex flex-wrap gap-2 mt-auto">
-                  {project.tech.map((tech, techIndex) => (
-                    <TechTag key={tech} delay={techIndex}>
-                      {tech}
-                    </TechTag>
-                  ))}
-                </div>
-              </div>
+              </TiltCard>
             </motion.div>
           ))}
         </motion.div>

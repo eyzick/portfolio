@@ -52,6 +52,22 @@ const FlappyBird: React.FC<FlappyBirdProps> = ({ isActive }) => {
     }
   }, [gameState]);
 
+  const handleInteraction = useCallback((e?: React.MouseEvent | React.TouchEvent) => {
+    e?.preventDefault();
+    if (!isFocused) {
+      containerRef.current?.focus();
+      return;
+    }
+
+    if (gameState === 'menu') {
+      startGame();
+    } else if (gameState === 'playing') {
+      jump();
+    } else if (gameState === 'gameOver') {
+      startGame();
+    }
+  }, [gameState, isFocused, startGame, jump]);
+
   const updateGame = useCallback(() => {
     if (gameState !== 'playing') return;
 
@@ -182,20 +198,13 @@ const FlappyBird: React.FC<FlappyBirdProps> = ({ isActive }) => {
 
       if (e.code === 'Space') {
         e.preventDefault();
-        if (gameState === 'menu') {
-          startGame();
-        } else if (gameState === 'playing') {
-          jump();
-        } else if (gameState === 'gameOver') {
-          startGame();
-        }
-        // Don't respond during dying animation
+        handleInteraction();
       }
     };
 
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [gameState, startGame, jump, isActive, isFocused]);
+  }, [isActive, isFocused, handleInteraction]);
 
   const draw = useCallback(() => {
     const canvas = canvasRef.current;
@@ -241,7 +250,7 @@ const FlappyBird: React.FC<FlappyBirdProps> = ({ isActive }) => {
       ctx.textAlign = 'center';
       ctx.fillText('Flappy Bird', canvasWidth / 2, canvasHeight / 2 - 50);
       ctx.font = '16px Arial';
-      ctx.fillText('Press SPACE to start', canvasWidth / 2, canvasHeight / 2);
+      ctx.fillText('Press SPACE or Click to start', canvasWidth / 2, canvasHeight / 2);
       ctx.fillText(`High Score: ${highScore}`, canvasWidth / 2, canvasHeight / 2 + 30);
       
       // Focus instruction
@@ -262,7 +271,7 @@ const FlappyBird: React.FC<FlappyBirdProps> = ({ isActive }) => {
       ctx.font = '16px Arial';
       ctx.fillText(`Score: ${score}`, canvasWidth / 2, canvasHeight / 2);
       ctx.fillText(`High Score: ${highScore}`, canvasWidth / 2, canvasHeight / 2 + 30);
-      ctx.fillText('Press SPACE to restart', canvasWidth / 2, canvasHeight / 2 + 60);
+      ctx.fillText('Press SPACE or Click to restart', canvasWidth / 2, canvasHeight / 2 + 60);
     }
 
     if (deathAnimation) {
@@ -289,16 +298,14 @@ const FlappyBird: React.FC<FlappyBirdProps> = ({ isActive }) => {
           ref={canvasRef}
           width={canvasWidth}
           height={canvasHeight}
-          className="border border-white/10 rounded shadow-inner cursor-pointer"
-          onClick={() => {
-            containerRef.current?.focus();
-            jump();
-          }}
+          className="border border-white/10 rounded shadow-inner cursor-pointer touch-none"
+          onClick={handleInteraction}
+          onTouchStart={handleInteraction}
         />
       </div>
       <div className="mt-4 text-center text-text-secondary">
         <p className={`mb-2 transition-colors ${isFocused ? 'text-primary font-medium' : ''}`}>
-          {isFocused ? 'Game Focused - Press SPACE to jump' : 'Click game to play'}
+          {isFocused ? 'Game Focused - Press SPACE or Click to jump' : 'Click game to play'}
         </p>
         <p className="text-sm opacity-70">Avoid the pipes and try to get the highest score!</p>
       </div>
