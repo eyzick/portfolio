@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, type Variants } from 'framer-motion';
-import { ExternalLink, Github, Calendar, Gift, ArrowUpRight, Camera } from 'lucide-react';
+import { ExternalLink, Github, Calendar, Gift, ArrowUpRight, Camera, GlassWater } from 'lucide-react';
 import TechTag from './TechTag';
 import TiltCard from './TiltCard';
 
@@ -39,6 +39,17 @@ const Projects: React.FC = () => {
       demo: '#',
       featured: true
     },
+    {
+      title: 'Thirsti',
+      description: 'A web application for cocktail recommendations based on the user\'s preferences and ingredients they have on hand.',
+      tech: ['React', 'TypeScript', 'Node.js'],
+      icon: GlassWater,
+      color: 'text-yellow-500',
+      bgColor: 'bg-yellow-500/10',
+      github: 'https://github.com/eyzick/thirsti',
+      demo: 'https://thirsti.eyzick.com',
+      featured: true
+    }
   ];
 
   const containerVariants: Variants = {
@@ -84,7 +95,7 @@ const Projects: React.FC = () => {
         </motion.div>
 
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
