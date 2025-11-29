@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, type Variants } from 'framer-motion';
-import { ExternalLink, Github, Calendar, Gift, ArrowUpRight } from 'lucide-react';
+import { ExternalLink, Github, Calendar, Gift, ArrowUpRight, Camera } from 'lucide-react';
 import TechTag from './TechTag';
 import TiltCard from './TiltCard';
 
@@ -28,17 +28,17 @@ const Projects: React.FC = () => {
       demo: 'https://wishlist.eyzick.com',
       featured: true
     },
-/*     {
-      title: 'House Cup Tracker',
-      description: 'A competitive house cup tracking system inspired by magical competitions with real-time scoring.',
-      tech: ['React', 'TypeScript', 'Firebase', 'CSS3', 'JavaScript'],
-      icon: Trophy,
+    {
+      title: 'DIY Baby Monitor',
+      description: 'A real-time video and audio streaming solution using Raspberry Pi, allowing secure monitoring from any device on the local network.',
+      tech: ['Python', 'Raspberry Pi', 'Flask', 'OpenCV', 'WebRTC'],
+      icon: Camera,
       color: 'text-secondary',
       bgColor: 'bg-secondary/10',
-      github: 'https://github.com/eyzick/house-cup-tournament',
-      demo: 'https://house-cup.eyzick.com',
-      featured: false
-    }, */
+      github: 'https://github.com/eyzick/baby-monitor',
+      demo: '#',
+      featured: true
+    },
   ];
 
   const containerVariants: Variants = {
@@ -84,7 +84,7 @@ const Projects: React.FC = () => {
         </motion.div>
 
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -94,10 +94,11 @@ const Projects: React.FC = () => {
             <motion.div
               key={project.title}
               variants={cardVariants}
+              className="h-full"
             >
               <TiltCard
                 className={`group relative bg-dark-card/50 backdrop-blur-sm border border-white/5 rounded-2xl overflow-hidden hover:border-primary/30 transition-all duration-300 cursor-pointer h-full`}
-                onClick={() => window.open(project.demo, '_blank')}
+                onClick={() => project.demo !== '#' ? window.open(project.demo, '_blank') : window.open(project.github, '_blank')}
               >
                 <div className="p-8 h-full flex flex-col">
                   <div className="flex justify-between items-start mb-6">
@@ -114,15 +115,17 @@ const Projects: React.FC = () => {
                       >
                         <Github className="w-5 h-5" />
                       </a>
-                      <a
-                        href={project.demo}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-2 text-text-secondary hover:text-white hover:bg-white/10 rounded-lg transition-colors relative z-10"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        <ExternalLink className="w-5 h-5" />
-                      </a>
+                      {project.demo !== '#' && (
+                        <a
+                          href={project.demo}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-2 text-text-secondary hover:text-white hover:bg-white/10 rounded-lg transition-colors relative z-10"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <ExternalLink className="w-5 h-5" />
+                        </a>
+                      )}
                     </div>
                   </div>
 
