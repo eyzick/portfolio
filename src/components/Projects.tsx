@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, type Variants } from 'framer-motion';
-import { ExternalLink, Github, Calendar, Gift, ArrowUpRight, Camera, GlassWater } from 'lucide-react';
+import { ExternalLink, Github, Calendar, Blend, ArrowUpRight, Camera, GlassWater } from 'lucide-react';
 import TechTag from './TechTag';
 import TiltCard from './TiltCard';
 
@@ -18,14 +18,14 @@ const Projects: React.FC = () => {
       featured: true
     },
     {
-      title: 'Wishlist App',
-      description: 'A modern wishlist application for creating and managing personal wish lists with sharing capabilities.',
+      title: 'Blendle',
+      description: 'A daily game about blending two colors to hit the target result.',
       tech: ['React', 'TypeScript', 'Node.js', 'PostgreSQL', 'Express'],
-      icon: Gift,
+      icon: Blend,
       color: 'text-primary',
       bgColor: 'bg-primary/10',
-      github: 'https://github.com/eyzick/wish-list-app',
-      demo: 'https://wishlist.eyzick.com',
+      github: 'https://github.com/eyzick/',
+      demo: 'https://www.blendle.fun',
       featured: true
     },
     {
