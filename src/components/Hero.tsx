@@ -49,7 +49,7 @@ const Hero: React.FC = () => {
       ref={sectionRef}
       id="top"
       onPointerMove={handlePointerMove}
-      className="hero-threshold relative isolate flex min-h-[88svh] items-end overflow-hidden px-0 pb-12 pt-28 md:pb-16"
+      className="hero-threshold relative isolate flex min-h-[88svh] items-end overflow-hidden px-0 pb-10 pt-24 sm:pb-12 sm:pt-28 md:pb-16"
     >
       <img
         src={HERO_IMAGE}
@@ -75,14 +75,15 @@ const Hero: React.FC = () => {
       >
         <div className="grid items-end gap-10 lg:grid-cols-[minmax(0,1fr)_auto]">
           <div>
-            <motion.p variants={itemVariants} className="mb-4 font-mono text-xs uppercase text-white/60">
+            <motion.p variants={itemVariants} className="mb-4 font-mono text-[10px] uppercase text-white/60 sm:text-xs">
               Full-stack developer · AI engineer
             </motion.p>
             <motion.h1
               variants={itemVariants}
-              className="max-w-5xl text-6xl font-semibold leading-[0.9] text-white md:text-8xl lg:text-9xl"
+              className="max-w-5xl text-5xl font-semibold leading-[0.9] text-white md:text-7xl lg:text-8xl xl:text-9xl"
             >
-              Isaac Gamble
+              <span className="block lg:inline">Isaac</span>
+              <span className="block lg:ml-5 lg:inline">Gamble</span>
             </motion.h1>
             <motion.p
               variants={itemVariants}
