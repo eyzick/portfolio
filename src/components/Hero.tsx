@@ -1,133 +1,130 @@
-import React from 'react';
-import { motion, type Variants } from 'framer-motion';
-import { Brain, Code2, Terminal, Zap, ArrowRight } from 'lucide-react';
-import { TypeAnimation } from 'react-type-animation';
-import ParticleBackground from './ParticleBackground';
+import React, { useRef } from 'react';
+import {
+  motion,
+  useMotionTemplate,
+  useMotionValue,
+  useSpring,
+  type Variants,
+} from 'framer-motion';
+import { ArrowDown, ArrowUpRight } from 'lucide-react';
+
+const HERO_IMAGE =
+  'https://images.unsplash.com/photo-1505635552518-3448ff116af3?auto=format&fit=crop&w=2200&q=88';
 
 const Hero: React.FC = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const pointerX = useMotionValue(50);
+  const pointerY = useMotionValue(48);
+  const smoothX = useSpring(pointerX, { stiffness: 120, damping: 24 });
+  const smoothY = useSpring(pointerY, { stiffness: 120, damping: 24 });
+  const revealMask = useMotionTemplate`radial-gradient(circle 220px at ${smoothX}% ${smoothY}%, black 0%, black 35%, transparent 100%)`;
+
+  const handlePointerMove = (event: React.PointerEvent<HTMLElement>) => {
+    const bounds = sectionRef.current?.getBoundingClientRect();
+    if (!bounds) return;
+
+    pointerX.set(((event.clientX - bounds.left) / bounds.width) * 100);
+    pointerY.set(((event.clientY - bounds.top) / bounds.height) * 100);
+  };
+
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.3,
-      },
+      transition: { staggerChildren: 0.12, delayChildren: 0.18 },
     },
   };
 
   const itemVariants: Variants = {
-    hidden: { y: 20, opacity: 0 },
+    hidden: { opacity: 0, y: 18 },
     visible: {
-      y: 0,
       opacity: 1,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut"
-      },
+      y: 0,
+      transition: { duration: 0.7, ease: 'easeOut' },
     },
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-      {/* Background Elements */}
-      <div className="absolute top-0 left-0 w-full h-full z-0">
-        <ParticleBackground />
-      </div>
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl pointer-events-none">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full blur-[100px] animate-pulse-slow" />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent/5 rounded-full blur-[120px] animate-pulse-slow" style={{ animationDelay: '2s' }} />
-      </div>
+    <section
+      ref={sectionRef}
+      id="top"
+      onPointerMove={handlePointerMove}
+      className="hero-threshold relative isolate flex min-h-[88svh] items-end overflow-hidden px-0 pb-12 pt-28 md:pb-16"
+    >
+      <img
+        src={HERO_IMAGE}
+        alt="A path disappearing into a misty forest."
+        className="absolute inset-0 -z-30 h-full w-full object-cover grayscale"
+        fetchPriority="high"
+      />
+      <motion.img
+        src={HERO_IMAGE}
+        alt=""
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-20 hidden h-full w-full object-cover saturate-[0.75] md:block"
+        style={{ WebkitMaskImage: revealMask, maskImage: revealMask }}
+      />
+      <div className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(8,10,9,0.22)_0%,rgba(8,10,9,0.18)_42%,rgba(8,10,9,0.92)_100%)]" />
+      <div className="noise pointer-events-none absolute inset-0 -z-[5] opacity-25" />
 
       <motion.div
-        className="container relative z-10 text-center max-w-4xl px-4"
+        className="container w-full"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
-        <motion.div variants={itemVariants} className="mb-6">
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6">
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-white/70">
+        <div className="grid items-end gap-10 lg:grid-cols-[minmax(0,1fr)_auto]">
+          <div>
+            <motion.p variants={itemVariants} className="mb-4 font-mono text-xs uppercase text-white/60">
+              Full-stack developer · AI engineer
+            </motion.p>
+            <motion.h1
+              variants={itemVariants}
+              className="max-w-5xl text-6xl font-semibold leading-[0.9] text-white md:text-8xl lg:text-9xl"
+            >
               Isaac Gamble
-            </span>
-          </h1>
-        </motion.div>
-
-        <motion.div variants={itemVariants} className="mb-12">
-          <div className="text-2xl md:text-3xl text-text-secondary mb-6 font-light h-10">
-            <TypeAnimation
-              sequence={[
-                'Full-Stack Developer',
-                2000,
-                'AI Engineer',
-                2000,
-                'Problem Solver',
-                2000,
-                'Tech Enthusiast',
-                2000,
-              ]}
-              wrapper="span"
-              speed={50}
-              repeat={Infinity}
-              className="text-primary font-medium"
-            />
+            </motion.h1>
+            <motion.p
+              variants={itemVariants}
+              className="mt-6 max-w-xl text-lg leading-8 text-white/70 md:text-xl"
+            >
+              I build useful software, playful interfaces, and intelligent systems.
+            </motion.p>
+            <motion.div variants={itemVariants} className="mt-8 flex flex-wrap gap-3">
+              <a href="#projects" className="portal-button portal-button-primary">
+                View projects
+                <ArrowDown className="h-4 w-4" />
+              </a>
+              <a href="mailto:gambleisaac@gmail.com" className="portal-button portal-button-ghost">
+                Get in touch
+                <ArrowUpRight className="h-4 w-4" />
+              </a>
+            </motion.div>
           </div>
-          <p className="text-lg md:text-xl text-text-muted max-w-2xl mx-auto leading-relaxed mb-10">
-            Crafting intelligent solutions with <span className="text-primary font-medium">TypeScript</span>, 
-            <span className="text-secondary font-medium"> Python</span>, and cutting-edge 
-            <span className="text-accent font-medium"> AI technologies</span>.
-          </p>
-        </motion.div>
 
-        <motion.div
-          variants={itemVariants}
-          className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-20"
-        >
-          <motion.button
-            className="btn-primary flex items-center gap-2 group"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={() => {
-              const skillsSection = document.getElementById('skills');
-              if (skillsSection) {
-                const headerHeight = 80;
-                const elementPosition = skillsSection.offsetTop;
-                const offsetPosition = elementPosition - headerHeight;
-                
-                window.scrollTo({
-                  top: offsetPosition,
-                  behavior: 'smooth'
-                });
-              }
-            }}
+          <motion.div
+            variants={itemVariants}
+            className="hidden items-center gap-3 font-mono text-[11px] uppercase text-white/45 lg:flex"
           >
-            View My Work
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </motion.button>
-          <motion.button
-            className="btn-secondary"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={() => {
-              window.location.href = 'mailto:gambleisaac@gmail.com';
-            }}
-          >
-            Get In Touch
-          </motion.button>
-        </motion.div>
-
-        <motion.div
-          variants={itemVariants}
-          className="pt-12 border-t border-white/5"
-        >
-          <div className="flex justify-center gap-12 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
-            <Brain className="h-8 w-8 text-primary" />
-            <Code2 className="h-8 w-8 text-secondary" />
-            <Terminal className="h-8 w-8 text-accent" />
-            <Zap className="h-8 w-8 text-primary" />
-          </div>
-        </motion.div>
+            <span className="signal-dot" />
+            Move to reveal
+          </motion.div>
+        </div>
       </motion.div>
+
+      <a
+        href="#skills"
+        aria-label="Continue to skills"
+        className="absolute bottom-5 left-1/2 -translate-x-1/2 text-white/45 transition-colors hover:text-white md:bottom-7"
+      >
+        <motion.span
+          className="block"
+          animate={{ y: [0, 5, 0] }}
+          transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
+        >
+          <ArrowDown className="h-5 w-5" />
+        </motion.span>
+      </a>
     </section>
   );
 };

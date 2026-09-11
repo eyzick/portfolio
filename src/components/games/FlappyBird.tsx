@@ -50,7 +50,7 @@ const FlappyBird: React.FC<FlappyBirdProps> = ({ isActive }) => {
     if (gameState === 'playing') {
       setBird(prev => ({ ...prev, velocity: jumpForce }));
     }
-  }, [gameState]);
+  }, [gameState, jumpForce]);
 
   const handleInteraction = useCallback((e?: React.MouseEvent | React.TouchEvent) => {
     e?.preventDefault();
@@ -280,7 +280,7 @@ const FlappyBird: React.FC<FlappyBirdProps> = ({ isActive }) => {
       ctx.fillStyle = '#fff';
       ctx.font = '24px Arial';
       ctx.textAlign = 'center';
-      ctx.fillText('💥 CRASH! 💥', canvasWidth / 2, canvasHeight / 2);
+      ctx.fillText('CRASH!', canvasWidth / 2, canvasHeight / 2);
     }
   }, [bird, pipes, score, highScore, gameState, deathAnimation, isFocused]);
 
@@ -289,25 +289,25 @@ const FlappyBird: React.FC<FlappyBirdProps> = ({ isActive }) => {
   }, [draw]);
 
   return (
-    <div className="flex flex-col items-center outline-none" ref={containerRef} tabIndex={0}>
-      <h3 className="text-2xl font-bold text-white mb-6">Flappy Bird Clone</h3>
+    <div className="mx-auto flex w-full max-w-[460px] flex-col items-center outline-none" ref={containerRef} tabIndex={0}>
+      <h3 className="mb-5 text-xl font-medium text-white">Flappy Bird</h3>
       <div 
-        className={`bg-white/5 rounded-lg p-4 backdrop-blur-sm border transition-colors duration-300 ${isFocused ? 'border-primary shadow-[0_0_15px_rgba(59,130,246,0.5)]' : 'border-white/10'}`}
+        className={`w-full rounded-md border bg-black/30 p-2 transition-all duration-300 ${isFocused ? 'border-[#d6ff7f]/60 shadow-[0_0_40px_rgba(214,255,127,0.08)]' : 'border-white/10'}`}
       >
         <canvas
           ref={canvasRef}
           width={canvasWidth}
           height={canvasHeight}
-          className="border border-white/10 rounded shadow-inner cursor-pointer touch-none"
+          className="h-auto max-w-full cursor-pointer touch-none rounded-sm opacity-90 shadow-inner"
           onClick={handleInteraction}
           onTouchStart={handleInteraction}
         />
       </div>
-      <div className="mt-4 text-center text-text-secondary">
-        <p className={`mb-2 transition-colors ${isFocused ? 'text-primary font-medium' : ''}`}>
+      <div className="mt-4 text-center text-white/40">
+        <p className={`mb-2 font-mono text-[10px] uppercase transition-colors ${isFocused ? 'text-[#d6ff7f]' : ''}`}>
           {isFocused ? 'Game Focused - Press SPACE or Click to jump' : 'Click game to play'}
         </p>
-        <p className="text-sm opacity-70">Avoid the pipes and try to get the highest score!</p>
+        <p className="text-xs opacity-70">Avoid the pipes and try for the high score.</p>
       </div>
     </div>
   );

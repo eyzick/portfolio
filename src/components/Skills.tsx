@@ -1,118 +1,62 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Brain, Code2, Terminal, Cloud } from 'lucide-react';
-import TechTag from './TechTag';
-import SkillCard from './SkillCard';
+import { capabilities } from '../data/portfolio';
 
 const Skills: React.FC = () => {
-  const skills = [
-    {
-      category: 'AI & Machine Learning',
-      icon: Brain,
-      color: 'text-accent',
-      bgColor: 'bg-accent/10',
-      skills: ['TensorFlow', 'PyTorch', 'OpenAI API', 'LangChain', 'Computer Vision', 'NLP'],
-      description: 'Building intelligent systems and AI-powered applications'
-    },
-    {
-      category: 'TypeScript & React',
-      icon: Code2,
-      color: 'text-primary',
-      bgColor: 'bg-primary/10',
-      skills: ['React', 'Next.js', 'Node.js', 'TypeScript', 'Redux', 'GraphQL'],
-      description: 'Creating modern, scalable web applications'
-    },
-    {
-      category: 'Python Development',
-      icon: Terminal,
-      color: 'text-secondary',
-      bgColor: 'bg-secondary/10',
-      skills: ['Django', 'FastAPI', 'Pandas', 'NumPy', 'Scikit-learn', 'Flask'],
-      description: 'Backend development and data science solutions'
-    },
-    {
-      category: 'Cloud & DevOps',
-      icon: Cloud,
-      color: 'text-yellow-500',
-      bgColor: 'bg-yellow-500/10',
-      skills: ['AWS', 'Docker', 'Kubernetes', 'CI/CD', 'Terraform', 'Monitoring'],
-      description: 'Scalable infrastructure and deployment strategies'
-    },
-  ];
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-      },
-    },
-  };
-
   return (
-    <section id="skills" className="py-24 bg-dark-bg relative overflow-hidden">
-      {/* Background Elements */}
-      <div className="absolute top-1/2 left-0 w-96 h-96 bg-primary/5 rounded-full blur-[100px] -translate-y-1/2 pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-secondary/5 rounded-full blur-[100px] pointer-events-none" />
-
-      <div className="container mx-auto px-4 relative z-10">
+    <section id="skills" className="signal-section overflow-hidden bg-[#080a09]">
+      <div className="container">
         <motion.div
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 30 }}
+          className="mb-14 grid gap-6 md:grid-cols-[0.7fr_1.3fr] md:items-end"
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
+          transition={{ duration: 0.65 }}
+          viewport={{ once: true, margin: '-80px' }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-white/60">
-              Skills & Expertise
-            </span>
-          </h2>
-          <p className="text-xl text-text-secondary max-w-2xl mx-auto">
-            Specialized in AI, TypeScript, and Python development with a focus on creating innovative solutions.
-          </p>
-        </motion.div>
-
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
-          {skills.map((skill, index) => (
-            <SkillCard
-              key={skill.category}
-              category={skill.category}
-              icon={skill.icon}
-              color={skill.color}
-              bgColor={skill.bgColor}
-              description={skill.description}
-              skills={skill.skills}
-              index={index}
-            />
-          ))}
-        </motion.div>
-
-        <motion.div
-          className="text-center mt-20"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-        >
-          <h3 className="text-2xl font-bold mb-8 text-white">
-            Tech Stack Highlights
-          </h3>
-          <div className="flex flex-wrap justify-center gap-3">
-            {['AI/ML', 'TypeScript', 'Python', 'React', 'Node.js', 'AWS', 'Docker', 'Kubernetes'].map((tech, index) => (
-              <TechTag key={tech} variant="highlight" delay={index}>
-                {tech}
-              </TechTag>
-            ))}
+          <p className="section-label">01 · Skills</p>
+          <div>
+            <h2 className="section-title">What I work with.</h2>
+            <p className="section-copy mt-4">A practical stack for building ideas from first sketch to production.</p>
           </div>
         </motion.div>
+
+        <div className="border-t border-white/[0.09]">
+          {capabilities.map((capability, index) => {
+            const Icon = capability.icon;
+
+            return (
+              <motion.article
+                key={capability.title}
+                className="skill-row group relative grid gap-5 border-b border-white/[0.09] py-7 md:grid-cols-[72px_minmax(220px,0.75fr)_1fr] md:items-center"
+                initial={{ opacity: 0, x: -18 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.55, delay: index * 0.06 }}
+                viewport={{ once: true, margin: '-60px' }}
+              >
+                <span className="font-mono text-[11px] text-white/30">0{index + 1}</span>
+                <div className="flex items-center gap-4">
+                  <motion.span
+                    className="grid h-10 w-10 shrink-0 place-items-center rounded-md border border-white/10 text-[#d6ff7f]"
+                    whileHover={{ rotate: 8 }}
+                  >
+                    <Icon className="h-5 w-5" />
+                  </motion.span>
+                  <h3 className="text-xl font-medium text-white md:text-2xl">{capability.title}</h3>
+                </div>
+                <div>
+                  <p className="max-w-xl text-sm leading-6 text-white/48">{capability.description}</p>
+                  <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2">
+                    {capability.skills.map((skill) => (
+                      <span key={skill} className="font-mono text-[10px] uppercase text-white/32 transition-colors group-hover:text-white/60">
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </motion.article>
+            );
+          })}
+        </div>
       </div>
     </section>
   );

@@ -7,17 +7,23 @@ export default {
   theme: {
     extend: {
       colors: {
-        'primary': '#3b82f6', // blue-500
-        'secondary': '#10b981', // emerald-500
-        'accent': '#8b5cf6', // violet-500
-        'dark-bg': '#020617', // slate-950
-        'dark-card': '#0f172a', // slate-900
-        'text-primary': '#f1f5f9', // slate-100
-        'text-secondary': '#94a3b8', // slate-400
-        'text-muted': '#64748b', // slate-500
+        'primary': '#d6ff7f',
+        'secondary': '#7bc7bd',
+        'accent': '#f7ad55',
+        'signal': '#d6ff7f',
+        'paper': '#080a09',
+        'paper-bright': '#111512',
+        'ink': '#f1f1ea',
+        'ink-soft': '#a8aea6',
+        'line': '#242a25',
+        'dark-bg': '#080a09',
+        'dark-card': '#111512',
+        'text-primary': '#f1f1ea',
+        'text-secondary': '#a8aea6',
+        'text-muted': '#636963',
       },
       fontFamily: {
-        'sans': ['Inter', 'sans-serif'],
+        'sans': ['Space Grotesk', 'Inter', 'sans-serif'],
         'mono': ['JetBrains Mono', 'monospace'],
       },
       animation: {

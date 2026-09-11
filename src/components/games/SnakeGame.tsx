@@ -309,25 +309,25 @@ const SnakeGame: React.FC<SnakeGameProps> = ({ isActive }) => {
   }, [draw]);
 
   return (
-    <div className="flex flex-col items-center outline-none" ref={containerRef} tabIndex={0}>
-      <h3 className="text-2xl font-bold text-white mb-6">Snake Game</h3>
+    <div className="mx-auto flex w-full max-w-[460px] flex-col items-center outline-none" ref={containerRef} tabIndex={0}>
+      <h3 className="mb-5 text-xl font-medium text-white">Snake</h3>
       <div 
-        className={`bg-white/5 rounded-lg p-4 backdrop-blur-sm border transition-colors duration-300 ${isFocused ? 'border-primary shadow-[0_0_15px_rgba(59,130,246,0.5)]' : 'border-white/10'}`}
+        className={`w-full rounded-md border bg-black/30 p-2 transition-all duration-300 ${isFocused ? 'border-[#d6ff7f]/60 shadow-[0_0_40px_rgba(214,255,127,0.08)]' : 'border-white/10'}`}
       >
         <canvas
           ref={canvasRef}
           width={canvasWidth}
           height={canvasHeight}
-          className="border border-white/10 rounded shadow-inner cursor-pointer touch-none"
+          className="h-auto max-w-full cursor-pointer touch-none rounded-sm opacity-90 shadow-inner"
           onClick={handleClick}
           onTouchStart={handleTouch}
         />
       </div>
-      <div className="mt-4 text-center text-text-secondary">
-        <p className={`mb-2 transition-colors ${isFocused ? 'text-primary font-medium' : ''}`}>
+      <div className="mt-4 text-center text-white/40">
+        <p className={`mb-2 font-mono text-[10px] uppercase transition-colors ${isFocused ? 'text-[#d6ff7f]' : ''}`}>
           {isFocused ? 'Game Focused - Use arrows or tap sides' : 'Click/Tap game to play'}
         </p>
-        <p className="text-sm opacity-70">Eat the red food to grow and increase your score!</p>
+        <p className="text-xs opacity-70">Eat the red food and keep moving.</p>
       </div>
     </div>
   );
