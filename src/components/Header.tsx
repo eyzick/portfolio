@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { AnimatePresence, motion, useScroll, useSpring } from 'framer-motion';
 import { Github, Linkedin, Mail, Menu, X, type LucideIcon } from 'lucide-react';
+import { useExperience } from '../context/useExperience';
 
 const navItems = [
   { name: 'Skills', href: '#skills' },
@@ -17,6 +18,7 @@ const socialLinks = [
 const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { isOnline, offGrid, tapSignal } = useExperience();
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
 
@@ -39,12 +41,21 @@ const Header: React.FC = () => {
       transition={{ duration: 0.55 }}
     >
       <div className="site-container flex h-[72px] items-center justify-between">
-        <a href="#top" className="group flex items-center gap-3" aria-label="Isaac Gamble home">
-          <span className="signal-dot" />
-          <span className="font-mono text-xs uppercase text-white/80 transition-colors group-hover:text-white">
-            eyzick
-          </span>
-        </a>
+        <div className="flex items-center">
+          <button
+            type="button"
+            onClick={tapSignal}
+            className="-ml-[18px] grid h-11 w-11 place-items-center"
+            aria-label={`Signal status: ${isOnline ? 'online' : 'offline'}`}
+          >
+            <span className={`signal-dot ${offGrid ? 'signal-dot-off-grid' : ''}`} />
+          </button>
+          <a href="#top" className="group -ml-1" aria-label="Isaac Gamble home">
+            <span className="block min-w-[64px] font-mono text-xs uppercase text-white/80 transition-colors group-hover:text-white">
+              {offGrid ? 'off grid' : 'eyzick'}
+            </span>
+          </a>
+        </div>
 
         <nav className="hidden items-center gap-8 md:flex" aria-label="Primary navigation">
           {navItems.map((item) => (

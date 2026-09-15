@@ -1,16 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Bird, Gamepad2, Zap } from 'lucide-react';
+import { Bird, Gamepad2, RadioTower, Zap } from 'lucide-react';
 import FlappyBird from './games/FlappyBird';
 import SnakeGame from './games/SnakeGame';
+import SignalHunt from './games/SignalHunt';
+import { useExperience } from '../context/useExperience';
+
+type GameId = 'flappy' | 'snake' | 'signal';
 
 const Games: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'flappy' | 'snake'>('flappy');
+  const [activeTab, setActiveTab] = useState<GameId>('flappy');
+  const { offGrid } = useExperience();
 
   const tabs = [
     { id: 'flappy' as const, label: 'Flappy Bird', icon: Bird },
     { id: 'snake' as const, label: 'Snake', icon: Zap },
+    ...(offGrid ? [{ id: 'signal' as const, label: 'Signal Hunt', icon: RadioTower }] : []),
   ];
+
+  useEffect(() => {
+    setActiveTab((current) => (offGrid ? 'signal' : current === 'signal' ? 'flappy' : current));
+  }, [offGrid]);
 
   return (
     <section id="games" className="overflow-hidden bg-[#080a09]">
@@ -28,7 +38,7 @@ const Games: React.FC = () => {
           <p className="section-label">03 · Playground</p>
           <div>
             <h2 className="section-title">Go offline for a minute.</h2>
-            <p className="section-copy mt-4">Two small games, built in React.</p>
+            <p className="section-copy mt-4">{offGrid ? 'A hidden frequency is open.' : 'Two small games, built in React.'}</p>
           </div>
         </motion.div>
 
@@ -44,7 +54,7 @@ const Games: React.FC = () => {
               <Gamepad2 className="h-4 w-4 text-[#d6ff7f]" />
               Offline arcade
             </div>
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2">
               {tabs.map((tab) => {
                 const Icon = tab.icon;
                 const isActive = activeTab === tab.id;
@@ -82,6 +92,7 @@ const Games: React.FC = () => {
               >
                 {activeTab === 'flappy' && <FlappyBird isActive />}
                 {activeTab === 'snake' && <SnakeGame isActive />}
+                {activeTab === 'signal' && <SignalHunt isActive />}
               </motion.div>
             </AnimatePresence>
           </div>

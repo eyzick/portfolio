@@ -7,24 +7,29 @@ import {
   type Variants,
 } from 'framer-motion';
 import { ArrowDown, ArrowUpRight } from 'lucide-react';
+import { useExperience } from '../context/useExperience';
 
-const HERO_IMAGE =
-  'https://images.unsplash.com/photo-1505635552518-3448ff116af3?auto=format&fit=crop&w=2200&q=88';
+const HERO_IMAGE = '/hero-off-grid.jpg';
 
 const Hero: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
+  const { offGrid } = useExperience();
   const pointerX = useMotionValue(50);
   const pointerY = useMotionValue(48);
   const smoothX = useSpring(pointerX, { stiffness: 120, damping: 24 });
   const smoothY = useSpring(pointerY, { stiffness: 120, damping: 24 });
   const revealMask = useMotionTemplate`radial-gradient(circle 220px at ${smoothX}% ${smoothY}%, black 0%, black 35%, transparent 100%)`;
 
-  const handlePointerMove = (event: React.PointerEvent<HTMLElement>) => {
+  const updateRevealPoint = (clientX: number, clientY: number) => {
     const bounds = sectionRef.current?.getBoundingClientRect();
     if (!bounds) return;
 
-    pointerX.set(((event.clientX - bounds.left) / bounds.width) * 100);
-    pointerY.set(((event.clientY - bounds.top) / bounds.height) * 100);
+    pointerX.set(((clientX - bounds.left) / bounds.width) * 100);
+    pointerY.set(((clientY - bounds.top) / bounds.height) * 100);
+  };
+
+  const handlePointerMove = (event: React.PointerEvent<HTMLElement>) => {
+    updateRevealPoint(event.clientX, event.clientY);
   };
 
   const containerVariants: Variants = {
@@ -48,6 +53,8 @@ const Hero: React.FC = () => {
     <section
       ref={sectionRef}
       id="top"
+      data-off-grid={offGrid || undefined}
+      onPointerDown={handlePointerMove}
       onPointerMove={handlePointerMove}
       className="hero-threshold relative isolate flex min-h-[88svh] items-end overflow-hidden px-0 pb-10 pt-24 sm:pb-12 sm:pt-28 md:pb-16"
     >
@@ -61,7 +68,7 @@ const Hero: React.FC = () => {
         src={HERO_IMAGE}
         alt=""
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-20 hidden h-full w-full object-cover saturate-[0.75] md:block"
+        className="pointer-events-none absolute inset-0 -z-20 h-full w-full object-cover saturate-[0.75]"
         style={{ WebkitMaskImage: revealMask, maskImage: revealMask }}
       />
       <div className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(8,10,9,0.22)_0%,rgba(8,10,9,0.18)_42%,rgba(8,10,9,0.92)_100%)]" />
@@ -101,6 +108,9 @@ const Hero: React.FC = () => {
                 <ArrowUpRight className="h-4 w-4" />
               </a>
             </motion.div>
+            <motion.p variants={itemVariants} className="mt-5 font-mono text-[10px] uppercase text-white/35 lg:hidden">
+              {offGrid ? 'No signal. Keep going.' : 'Touch the forest'}
+            </motion.p>
           </div>
 
           <motion.div
@@ -108,7 +118,7 @@ const Hero: React.FC = () => {
             className="hidden items-center gap-3 font-mono text-[11px] uppercase text-white/45 lg:flex"
           >
             <span className="signal-dot" />
-            Move to reveal
+            {offGrid ? 'Off grid' : 'Move to reveal'}
           </motion.div>
         </div>
       </motion.div>

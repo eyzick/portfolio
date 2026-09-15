@@ -14,6 +14,7 @@ export interface Project {
   title: string;
   kicker: string;
   description: string;
+  proof: string;
   tech: string[];
   icon: LucideIcon;
   image: string;
@@ -37,10 +38,10 @@ export const projects: Project[] = [
     kicker: 'Interactive RSVP',
     description:
       'A Harry Potter themed RSVP page featuring interactive elements, animations, and seasonal content.',
+    proof: 'Live experience · Seasonal',
     tech: ['React', 'TypeScript', 'CSS3', 'JavaScript', 'HTML5'],
     icon: Calendar,
-    image:
-      'https://images.unsplash.com/photo-1666068141229-2b693d8df3db?auto=format&fit=crop&w=1200&q=80',
+    image: '/project-rsvp.jpg',
     imageAlt: 'Lit candles and handwritten pages on a dark table.',
     accent: '#f7ad55',
     github: 'https://github.com/eyzick/harry-potter-halloween',
@@ -51,10 +52,10 @@ export const projects: Project[] = [
     kicker: 'Daily Game',
     description:
       'A daily game about blending two colors to hit the target result.',
+    proof: 'Daily puzzle · Full stack',
     tech: ['React', 'TypeScript', 'Node.js', 'PostgreSQL', 'Express'],
     icon: Blend,
-    image:
-      'https://images.unsplash.com/photo-1600716887304-382af77ee86f?auto=format&fit=crop&w=1200&q=80',
+    image: '/project-blendle.jpg',
     imageAlt: 'Bright abstract paint with blue, green, and yellow shapes.',
     accent: '#7bc7bd',
     github: 'https://github.com/eyzick/',
@@ -65,10 +66,10 @@ export const projects: Project[] = [
     kicker: 'Raspberry Pi',
     description:
       'A Raspberry Pi monitor that streams video and audio securely across a local network.',
+    proof: 'Private LAN · Video + audio',
     tech: ['Python', 'Raspberry Pi', 'Flask', 'OpenCV', 'WebRTC'],
     icon: Camera,
-    image:
-      'https://images.unsplash.com/photo-1610812387871-806d3db9f5aa?auto=format&fit=crop&w=1200&q=80',
+    image: '/project-baby-monitor.jpg',
     imageAlt: 'Close view of a Raspberry Pi circuit board.',
     accent: '#d6ff7f',
     github: 'https://github.com/eyzick/baby-monitor',
@@ -79,10 +80,10 @@ export const projects: Project[] = [
     kicker: 'Recommendations',
     description:
       'A web application for cocktail recommendations based on preferences and ingredients on hand.',
+    proof: 'Live app · Ingredient-led',
     tech: ['React', 'TypeScript', 'Node.js'],
     icon: GlassWater,
-    image:
-      'https://images.unsplash.com/photo-1514359652734-6205dd477a1e?auto=format&fit=crop&w=1200&q=80',
+    image: '/project-thirsti.jpg',
     imageAlt: 'Cocktail glass with citrus and herbs on a bar.',
     accent: '#f2c8a0',
     github: 'https://github.com/eyzick/thirsti',

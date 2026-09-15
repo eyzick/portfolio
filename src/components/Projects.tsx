@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowUpRight, Github } from 'lucide-react';
 import { projects } from '../data/portfolio';
+import ExitLink from './ExitLink';
 
 const Projects: React.FC = () => {
   const [activeProject, setActiveProject] = useState(0);
@@ -90,29 +91,29 @@ const Projects: React.FC = () => {
                         <ArrowUpRight className="mt-1 h-5 w-5 shrink-0 text-white/28 transition-all group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-white" />
                       </div>
                       <p className="mt-3 max-w-lg text-sm leading-6 text-white/48">{project.description}</p>
-                      <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-3">
+                      <p className="mt-4 flex items-center gap-2 font-mono text-[10px] uppercase text-[#d6ff7f]/60">
+                        <span className="h-px w-5 bg-[#d6ff7f]/40" />
+                        {project.proof}
+                      </p>
+                      <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-3">
                         {project.tech.slice(0, 4).map((tech) => (
                           <span key={tech} className="font-mono text-[10px] uppercase text-white/30">{tech}</span>
                         ))}
                         <span className="hidden h-px flex-1 bg-white/[0.08] sm:block" />
-                        <a
+                        <ExitLink
                           href={href}
-                          target="_blank"
-                          rel="noopener noreferrer"
                           className="project-link"
                           aria-label={`Open ${project.title}`}
                         >
                           Open
-                        </a>
-                        <a
+                        </ExitLink>
+                        <ExitLink
                           href={project.github}
-                          target="_blank"
-                          rel="noopener noreferrer"
                           className="project-link"
                           aria-label={`${project.title} on GitHub`}
                         >
                           <Github className="h-3.5 w-3.5" />
-                        </a>
+                        </ExitLink>
                       </div>
                     </div>
                   </div>
@@ -122,18 +123,13 @@ const Projects: React.FC = () => {
           </div>
         </div>
 
-        <motion.a
+        <ExitLink
           href="https://github.com/eyzick"
-          target="_blank"
-          rel="noopener noreferrer"
           className="portal-button portal-button-ghost mt-12"
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
         >
           More on GitHub
           <ArrowUpRight className="h-4 w-4" />
-        </motion.a>
+        </ExitLink>
       </div>
     </section>
   );
