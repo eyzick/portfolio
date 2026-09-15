@@ -5,7 +5,7 @@ import { capabilities } from '../data/portfolio';
 const Skills: React.FC = () => {
   return (
     <section id="skills" className="signal-section overflow-hidden bg-[#080a09]">
-      <div className="container">
+      <div className="site-container">
         <motion.div
           className="mb-14 grid gap-6 md:grid-cols-[0.7fr_1.3fr] md:items-end"
           initial={{ opacity: 0, y: 24 }}

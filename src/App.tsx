@@ -15,7 +15,7 @@ function App() {
         <Projects />
         <Games />
         <section id="contact" className="border-t border-white/[0.08] bg-[#0c0f0d]">
-          <div className="container grid gap-10 md:grid-cols-[0.7fr_1.3fr] md:items-end">
+          <div className="site-container grid gap-10 md:grid-cols-[0.7fr_1.3fr] md:items-end">
             <p className="section-label">04 · Contact</p>
             <div>
               <h2 className="section-title max-w-3xl">Have something in mind?</h2>

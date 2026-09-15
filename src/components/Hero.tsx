@@ -68,7 +68,7 @@ const Hero: React.FC = () => {
       <div className="noise pointer-events-none absolute inset-0 -z-[5] opacity-25" />
 
       <motion.div
-        className="container w-full"
+        className="site-container"
         variants={containerVariants}
         initial="hidden"
         animate="visible"

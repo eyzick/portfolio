@@ -9,7 +9,7 @@ const Projects: React.FC = () => {
 
   return (
     <section id="projects" className="bg-[#0c0f0d]">
-      <div className="container">
+      <div className="site-container">
         <motion.div
           className="mb-14 grid gap-6 md:grid-cols-[0.7fr_1.3fr] md:items-end"
           initial={{ opacity: 0, y: 24 }}

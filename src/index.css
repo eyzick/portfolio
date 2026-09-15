@@ -40,14 +40,15 @@
     color: #080a09;
   }
 
-  .container {
-    width: min(100% - 40px, 1180px);
+  .site-container {
+    width: calc(100% - 48px);
+    max-width: 1180px;
     margin-inline: auto;
   }
 
   @media (min-width: 768px) {
-    .container {
-      width: min(100% - 96px, 1180px);
+    .site-container {
+      width: calc(100% - 96px);
     }
   }
 }

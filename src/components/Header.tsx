@@ -38,7 +38,7 @@ const Header: React.FC = () => {
       animate={{ y: 0 }}
       transition={{ duration: 0.55 }}
     >
-      <div className="container flex h-[72px] items-center justify-between">
+      <div className="site-container flex h-[72px] items-center justify-between">
         <a href="#top" className="group flex items-center gap-3" aria-label="Isaac Gamble home">
           <span className="signal-dot" />
           <span className="font-mono text-xs uppercase text-white/80 transition-colors group-hover:text-white">
@@ -86,7 +86,7 @@ const Header: React.FC = () => {
             exit={{ opacity: 0, height: 0 }}
             className="overflow-hidden border-t border-white/[0.08] bg-[#080a09]/95 backdrop-blur-xl md:hidden"
           >
-            <div className="container flex flex-col gap-5 py-6">
+            <div className="site-container flex flex-col gap-5 py-6">
               {navItems.map((item) => (
                 <a
                   key={item.name}
